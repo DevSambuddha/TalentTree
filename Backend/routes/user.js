@@ -1,11 +1,5 @@
-// const express = require("express");
-// const Router = express.Router;
 const { Router } = require("express");
 const userRouter = Router();
-
-// const { Router } = require("express");
-
-// const userRouter = Router();
 
 userRouter.post("/signup", function (req, res) {
   res.json({
