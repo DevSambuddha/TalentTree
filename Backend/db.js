@@ -1,11 +1,9 @@
-//const { Schema, default: mongoose } = require("mongoose");
+
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 console.log("conneted to");
-// mongoose.connect(
-//   "mongodb+srv://admin:<db_password>@cluster0.t57hp.mongodb.net/mongodb://localhost:27017/mydatabase"
-// );
+
 const ObjectId = mongoose.Types.ObjectId;
 
 const userSchema = new Schema({
