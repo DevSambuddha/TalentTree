@@ -1,6 +1,8 @@
 const { Router } = require("express");
 const { userModel } = require("../db");
+const jwt = require("jsonwebtoken");
 const userRouter = Router();
+require("dotenv").config;
 
 userRouter.post("/signup", async function (req, res) {
   const { email, password, firstName, lastName } = req.body;
@@ -29,18 +31,25 @@ userRouter.post("/signup", async function (req, res) {
 
 userRouter.post("/signin", async function (req, res) {
   const { email, password } = req.body;
-  try {
-    const user = await userModel.find({
-      email: email,
-      password: password,
-    });
+
+  const user = await userModel.find({
+    email: email,
+    password: password,
+  });
+  if (user) {
+    const token = jwt.sign(
+      {
+        id: user._id,
+      },
+      process.env.JWT_USER_PASSWORD
+    );
+    //Do cookie logic here
     res.json({
-      message: "signin succeeded",
+      token: token,
     });
-  } catch (error) {
-    res.status(500).json({
-      message: "Error occured during signin",
-      error: error.message,
+  } else {
+    res.status(403).json({
+      message: "Incorrect credentials",
     });
   }
 });
