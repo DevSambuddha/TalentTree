@@ -32,7 +32,7 @@ userRouter.post("/signup", async function (req, res) {
 userRouter.post("/signin", async function (req, res) {
   const { email, password } = req.body;
 
-  const user = await userModel.find({
+  const user = await userModel.findOne({
     email: email,
     password: password,
   });
