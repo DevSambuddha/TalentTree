@@ -1,8 +1,7 @@
-
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
-console.log("conneted to");
+console.log("conneted to Server");
 
 const ObjectId = mongoose.Types.ObjectId;
 
