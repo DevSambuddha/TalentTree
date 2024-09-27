@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { userModel, purchaseModel } = require("../db");
+const { userModel, purchaseModel, courseModel } = require("../db");
 const jwt = require("jsonwebtoken");
 const userRouter = Router();
 require("dotenv").config;
@@ -61,8 +61,20 @@ userRouter.get("/purchases", userMiddleware, async function (req, res) {
   const purchases = await purchaseModel.find({
     userId,
   });
+
+  // let purchasedCourseIds = [];
+
+  //   for (let i = 0; i<purchases.length;i++){
+  //       purchasedCourseIds.push(purchases[i].courseId)
+  //   }
+
+  const courseData = await courseModel.find({
+    _id: { $in: purchaseModel.map((x) => x.courseId) },
+  });
+
   res.json({
     purchases,
+    courseData,
   });
 });
 
