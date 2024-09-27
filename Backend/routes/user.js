@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { userModel } = require("../db");
+const { userModel, purchaseModel } = require("../db");
 const jwt = require("jsonwebtoken");
 const userRouter = Router();
 require("dotenv").config;
@@ -55,9 +55,14 @@ userRouter.post("/signin", async function (req, res) {
   }
 });
 
-userRouter.get("/purchases", function (req, res) {
+userRouter.get("/purchases", userMiddleware, async function (req, res) {
+  const userId = req.body.userId;
+
+  const purchases = await purchaseModel.find({
+    userId,
+  });
   res.json({
-    message: "purchases endpoint",
+    purchases,
   });
 });
 
