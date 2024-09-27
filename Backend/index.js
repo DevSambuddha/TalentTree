@@ -12,9 +12,11 @@ app.use("/api/v1/user", userRouter);
 app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/course", courseRouter);
 
+const port = process.env.PORT || 3000;
+
 async function main() {
   await mongoose.connect(process.env.DB_PASSWORD);
-  app.listen(3000);
+  app.listen(port);
   console.log("listening on port 3000");
 }
 
