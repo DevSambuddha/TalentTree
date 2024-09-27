@@ -1,8 +1,9 @@
 const { Router } = require("express");
 const adminRouter = Router();
 const jwt = require("jsonwebtoken");
-const { adminModel } = require("../db");
+const { adminModel, courseModel } = require("../db");
 require("dotenv").config;
+const { adminMiddleware } = require("../Middleware/admin");
 
 adminRouter.post("/signup", async function (req, res) {
   const { email, password, firstName, lastName } = req.body;
@@ -54,9 +55,20 @@ adminRouter.post("/signin", async function (req, res) {
   }
 });
 
-adminRouter.post("/", function (req, res) {
+adminRouter.post("/course", adminMiddleware, async function (req, res) {
+  const adminId = req.userId;
+  const { title, description, imageUrl, price } = req.body;
+  //creating web3 saas video(imp watch for image uploading)
+  const course = await courseModel.create({
+    title,
+    description,
+    imageUrl,
+    price,
+    creatorId: adminId,
+  });
   res.json({
-    message: "signup endpoint",
+    message: "course created",
+    courseId: course._id,
   });
 });
 

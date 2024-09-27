@@ -3,6 +3,7 @@ const { userModel } = require("../db");
 const jwt = require("jsonwebtoken");
 const userRouter = Router();
 require("dotenv").config;
+const { userMiddleware } = require("../Middleware/user");
 
 userRouter.post("/signup", async function (req, res) {
   const { email, password, firstName, lastName } = req.body;
